@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎁 مفاجأة خاصة للموظفين | Employee Surprise</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #4169E1 0%, #5B5FDB 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated background particles */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-50px, -50px); }
+        }
+
+        .container {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 50px 40px;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .company-logo {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f4f8;
+        }
+
+        .company-logo img {
+            max-width: 180px;
+            height: auto;
+        }
+
+        .gift-icon {
+            font-size: 80px;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 3px dashed #f39c12;
+        }
+
+        .highlight-box p {
+            color: #2d3748;
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Tajawal', 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            direction: ltr;
+            text-align: left;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #4169E1;
+            box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #4169E1 0%, #5B5FDB 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Tajawal', 'Poppins', sans-serif;
+            box-shadow: 0 4px 15px rgba(65, 105, 225, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(65, 105, 225, 0.6);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #48bb78;
+            font-size: 13px;
+            margin-top: 15px;
+            opacity: 0.8;
+        }
+
+        /* Warning Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 550px;
+            width: 90%;
+            padding: 50px 40px;
+            position: relative;
+            animation: modalSlideUp 0.4s ease-out;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.3);
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .warning-icon {
+            font-size: 100px;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: warningPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes warningPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .warning-title {
+            text-align: center;
+            color: #e53e3e;
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .warning-text {
+            color: #2d3748;
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .warning-box {
+            background: #fff5f5;
+            border: 3px solid #fc8181;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .warning-box h3 {
+            color: #c53030;
+            font-size: 20px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .warning-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .warning-box li {
+            color: #2d3748;
+            font-size: 15px;
+            margin-bottom: 10px;
+            padding-right: 25px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .warning-box li::before {
+            content: '✓';
+            position: absolute;
+            right: 0;
+            color: #48bb78;
+            font-weight: 900;
+            font-size: 18px;
+        }
+
+        .close-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Tajawal', 'Poppins', sans-serif;
+            margin-top: 20px;
+        }
+
+        .close-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #718096;
+            font-size: 13px;
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        /* RTL/LTR specific adjustments */
+        [dir="rtl"] .warning-box li {
+            padding-right: 25px;
+            padding-left: 0;
+        }
+
+        [dir="rtl"] .warning-box li::before {
+            right: 0;
+            left: auto;
+        }
+
+        [dir="ltr"] .warning-box li {
+            padding-left: 25px;
+            padding-right: 0;
+        }
+
+        [dir="ltr"] .warning-box li::before {
+            left: 0;
+            right: auto;
+        }
+
+        /* Language toggle */
+        .lang-toggle {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 2px solid #e2e8f0;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #718096;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: 'Tajawal', 'Poppins', sans-serif;
+        }
+
+        .lang-btn:hover {
+            border-color: #4169E1;
+            color: #4169E1;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container, .modal-content {
+                padding: 35px 25px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .warning-title {
+                font-size: 26px;
+            }
+
+            .gift-icon, .warning-icon {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="company-logo">
+            <img src="https://cdn.prod.website-files.com/6506c1d067ca1ac9e35e732e/6508217276ec3097d0e7f37b_image%201.png" alt="Tameed Logo">
+        </div>
+        
+        <div class="lang-toggle">
+            <button class="lang-btn" onclick="toggleLanguage()">
+                <span id="lang-btn-text">English</span>
+            </button>
+        </div>
+
+        <div class="gift-icon">🎁</div>
+        
+        <h1 id="main-title">مفاجأة خاصة للموظفين!</h1>
+        
+        <p class="subtitle" id="subtitle">
+            تهانينا! تم اختيارك للحصول على مكافأة خاصة. أدخل بريدك الإلكتروني للمطالبة بجائزتك الآن!
+        </p>
+
+        <div class="highlight-box">
+            <p id="highlight-text">⏰ العرض ساري لفترة محدودة!</p>
+        </div>
+
+        <form id="giftForm" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label for="email" id="email-label">البريد الإلكتروني للشركة:</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required 
+                    placeholder="example@company.com"
+                    autocomplete="email"
+                >
+            </div>
+
+            <button type="submit" class="submit-btn" id="submit-btn">
+                🎉 احصل على جائزتك الآن
+            </button>
+
+            <div class="secure-badge">
+                <span>🔒</span>
+                <span id="secure-text">آمن ومحمي 100%</span>
+            </div>
+        </form>
+    </div>
+
+    <!-- Warning Modal -->
+    <div class="modal" id="warningModal">
+        <div class="modal-content">
+            <div class="warning-icon">⚠️</div>
+            
+            <h2 class="warning-title" id="warning-title">تنبيه أمني!</h2>
+            
+            <p class="warning-text" id="warning-text">
+                لقد وقعت للتو في فخ QR Code وهمي! تخيل لو كان هذا هجوماً حقيقياً...
+            </p>
+
+            <div class="warning-box">
+                <h3 id="tips-title">⚡ نصائح مهمة لحماية نفسك:</h3>
+                <ul id="tips-list">
+                    <li>لا تقم بمسح أكواد QR من مصادر غير موثوقة</li>
+                    <li>تحقق من رابط الموقع قبل إدخال أي بيانات</li>
+                    <li>لا تشارك معلومات حساسة عبر روابط عشوائية</li>
+                    <li>استخدم تطبيقات موثوقة لمسح الأكواد</li>
+                    <li>عند الشك، اسأل قسم تقنية المعلومات</li>
+                </ul>
+            </div>
+
+            <p class="warning-text" id="remember-text">
+                <strong>تذكر:</strong> المهاجمون يستخدمون نفس الأساليب لسرقة بياناتك!
+            </p>
+
+            <button class="close-btn" onclick="closeModal()" id="close-btn">
+                فهمت، شكراً لك! 👍
+            </button>
+
+            <p class="footer-note" id="footer-note">
+                هذا تمرين توعوي من فريق الأمن السيبراني 🛡️
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'ar';
+
+        const translations = {
+            ar: {
+                langBtn: 'English',
+                mainTitle: 'مفاجأة خاصة للموظفين!',
+                subtitle: 'تهانينا! تم اختيارك للحصول على مكافأة خاصة. أدخل بريدك الإلكتروني للمطالبة بجائزتك الآن!',
+                highlightText: '⏰ العرض ساري لفترة محدودة!',
+                emailLabel: 'البريد الإلكتروني للشركة:',
+                submitBtn: '🎉 احصل على جائزتك الآن',
+                secureText: 'آمن ومحمي 100%',
+                warningTitle: 'تنبيه أمني!',
+                warningText: 'لقد وقعت للتو في فخ QR Code وهمي! تخيل لو كان هذا هجوماً حقيقياً...',
+                tipsTitle: '⚡ نصائح مهمة لحماية نفسك:',
+                tips: [
+                    'لا تقم بمسح أكواد QR من مصادر غير موثوقة',
+                    'تحقق من رابط الموقع قبل إدخال أي بيانات',
+                    'لا تشارك معلومات حساسة عبر روابط عشوائية',
+                    'استخدم تطبيقات موثوقة لمسح الأكواد',
+                    'عند الشك، اسأل قسم تقنية المعلومات'
+                ],
+                rememberText: '<strong>تذكر:</strong> المهاجمون يستخدمون نفس الأساليب لسرقة بياناتك!',
+                closeBtn: 'فهمت، شكراً لك! 👍',
+                footerNote: 'هذا تمرين توعوي من فريق الأمن السيبراني 🛡️'
+            },
+            en: {
+                langBtn: 'العربية',
+                mainTitle: 'Special Employee Surprise!',
+                subtitle: 'Congratulations! You have been selected for a special reward. Enter your email to claim your prize now!',
+                highlightText: '⏰ Limited Time Offer!',
+                emailLabel: 'Company Email:',
+                submitBtn: '🎉 Claim Your Prize Now',
+                secureText: '100% Secure & Protected',
+                warningTitle: 'Security Alert!',
+                warningText: 'You just fell for a fake QR Code trap! Imagine if this was a real attack...',
+                tipsTitle: '⚡ Important Tips to Protect Yourself:',
+                tips: [
+                    'Never scan QR codes from untrusted sources',
+                    'Verify the website URL before entering any data',
+                    'Don\'t share sensitive information via random links',
+                    'Use trusted apps to scan QR codes',
+                    'When in doubt, ask the IT department'
+                ],
+                rememberText: '<strong>Remember:</strong> Attackers use the same tactics to steal your data!',
+                closeBtn: 'Got it, Thanks! 👍',
+                footerNote: 'This is an awareness exercise from the Cybersecurity Team 🛡️'
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            const html = document.documentElement;
+            html.setAttribute('lang', currentLang);
+            html.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            
+            updateContent();
+        }
+
+        function updateContent() {
+            const t = translations[currentLang];
+            
+            document.getElementById('lang-btn-text').textContent = t.langBtn;
+            document.getElementById('main-title').textContent = t.mainTitle;
+            document.getElementById('subtitle').textContent = t.subtitle;
+            document.getElementById('highlight-text').textContent = t.highlightText;
+            document.getElementById('email-label').textContent = t.emailLabel;
+            document.getElementById('submit-btn').textContent = t.submitBtn;
+            document.getElementById('secure-text').textContent = t.secureText;
+            document.getElementById('warning-title').textContent = t.warningTitle;
+            document.getElementById('warning-text').textContent = t.warningText;
+            document.getElementById('tips-title').textContent = t.tipsTitle;
+            
+            const tipsList = document.getElementById('tips-list');
+            tipsList.innerHTML = '';
+            t.tips.forEach(tip => {
+                const li = document.createElement('li');
+                li.textContent = tip;
+                tipsList.appendChild(li);
+            });
+            
+            document.getElementById('remember-text').innerHTML = t.rememberText;
+            document.getElementById('close-btn').textContent = t.closeBtn;
+            document.getElementById('footer-note').textContent = t.footerNote;
+        }
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const submitBtn = document.getElementById('submit-btn');
+            
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = currentLang === 'ar' ? '⏳ جاري الحفظ...' : '⏳ Saving...';
+            
+            // Save to localStorage
+            try {
+                const currentDate = new Date().toLocaleString('ar-SA', {
+                    timeZone: 'Asia/Riyadh',
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                
+                const backupData = JSON.parse(localStorage.getItem('phishing_emails') || '[]');
+                backupData.push({
+                    email: email,
+                    timestamp: currentDate,
+                    language: currentLang === 'ar' ? 'عربي' : 'English',
+                    rawTimestamp: new Date().toISOString()
+                });
+                localStorage.setItem('phishing_emails', JSON.stringify(backupData));
+                console.log('✅ Email saved successfully:', email);
+                console.log('📊 Total emails captured:', backupData.length);
+            } catch (error) {
+                console.error('❌ Error saving email:', error);
+            }
+            
+            // Show warning modal
+            document.getElementById('warningModal').classList.add('show');
+            
+            // Reset button
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
+        
+        // Export to Excel function
+        function exportToExcel() {
+            try {
+                const data = JSON.parse(localStorage.getItem('phishing_emails') || '[]');
+                
+                if (data.length === 0) {
+                    alert(currentLang === 'ar' ? 'لا توجد بيانات للتصدير!' : 'No data to export!');
+                    return;
+                }
+                
+                // Create CSV content
+                let csv = '\uFEFF'; // UTF-8 BOM for Excel Arabic support
+                csv += 'التاريخ والوقت,البريد الإلكتروني,اللغة\n';
+                
+                data.forEach(item => {
+                    csv += `"${item.timestamp}","${item.email}","${item.language}"\n`;
+                });
+                
+                // Create download link
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                
+                const filename = `QR_Phishing_Results_${new Date().toISOString().split('T')[0]}.csv`;
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
+                link.style.visibility = 'hidden';
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                console.log('✅ Exported', data.length, 'emails to Excel');
+            } catch (error) {
+                console.error('❌ Error exporting:', error);
+                alert(currentLang === 'ar' ? 'حدث خطأ في التصدير!' : 'Export error!');
+            }
+        }
+        
+        // Clear data function
+        function clearData() {
+            if (confirm(currentLang === 'ar' ? 'هل أنت متأكد من حذف جميع البيانات؟' : 'Are you sure you want to delete all data?')) {
+                localStorage.removeItem('phishing_emails');
+                alert(currentLang === 'ar' ? 'تم حذف البيانات بنجاح!' : 'Data cleared successfully!');
+                console.log('🗑️ All data cleared');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('warningModal').classList.remove('show');
+        }
+
+        // Close modal on outside click
+        document.getElementById('warningModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
