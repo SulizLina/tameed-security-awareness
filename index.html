@@ -12,6 +12,11 @@
             box-sizing: border-box;
         }
 
+        html {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
         body {
             font-family: 'Tajawal', 'Poppins', sans-serif;
             background: linear-gradient(135deg, #4169E1 0%, #5B5FDB 100%);
@@ -19,9 +24,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px 10px;
+            padding: 15px;
             position: relative;
             overflow-x: hidden;
+            margin: 0;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         /* Animated background particles */
@@ -46,11 +54,12 @@
             border-radius: 24px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             max-width: 500px;
-            width: 95%;
+            width: 100%;
             padding: 50px 40px;
             position: relative;
             z-index: 1;
             animation: slideUp 0.6s ease-out;
+            box-sizing: border-box;
         }
 
         @keyframes slideUp {
@@ -378,18 +387,17 @@
             }
             
             .container {
-                padding: 30px 20px;
+                padding: 25px 15px;
                 border-radius: 16px;
                 width: 100%;
-                max-width: 100%;
             }
 
             h1 {
-                font-size: 22px;
+                font-size: 20px;
             }
 
             .company-logo img {
-                max-width: 140px;
+                max-width: 130px;
             }
 
             .subtitle {
@@ -397,51 +405,59 @@
             }
 
             .highlight-box {
-                padding: 15px;
+                padding: 12px;
             }
 
             .highlight-box p {
-                font-size: 16px;
+                font-size: 15px;
             }
 
             .gift-icon, .warning-icon {
-                font-size: 60px;
+                font-size: 50px;
             }
             
             .warning-title {
-                font-size: 24px;
+                font-size: 22px;
             }
             
             .warning-text {
-                font-size: 16px;
+                font-size: 15px;
             }
             
             input[type="email"] {
                 font-size: 16px;
-                padding: 12px 15px;
+                padding: 12px 12px;
             }
             
             .submit-btn {
                 font-size: 16px;
-                padding: 15px;
+                padding: 14px;
+            }
+            
+            .form-group {
+                margin-bottom: 20px;
             }
         }
 
         @media (max-width: 400px) {
+            body {
+                padding: 8px;
+            }
+            
             .container {
-                padding: 25px 15px;
+                padding: 20px 12px;
             }
             
             h1 {
-                font-size: 20px;
+                font-size: 18px;
             }
             
             .company-logo img {
-                max-width: 120px;
+                max-width: 110px;
             }
             
             .modal-content {
-                padding: 30px 20px;
+                padding: 25px 15px;
             }
         }
     </style>
