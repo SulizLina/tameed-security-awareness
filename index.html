@@ -24,7 +24,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 15px;
+            padding: 15px 15px 10px 15px;
             position: relative;
             overflow-x: hidden;
             margin: 0;
@@ -383,13 +383,16 @@
         /* Responsive */
         @media (max-width: 600px) {
             body {
-                padding: 10px;
+                padding: 10px 10px 5px 10px;
+                align-items: flex-start;
+                padding-top: 20px;
             }
             
             .container {
-                padding: 25px 15px;
+                padding: 25px 15px 20px 15px;
                 border-radius: 16px;
                 width: 100%;
+                margin-bottom: 5px;
             }
 
             h1 {
@@ -494,7 +497,7 @@
                     id="email" 
                     name="email" 
                     required 
-                    placeholder="example@company.com"
+                    placeholder="username@tameed.sa"
                     autocomplete="email"
                 >
             </div>
