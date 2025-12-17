@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -471,25 +471,25 @@
         
         <div class="lang-toggle">
             <button class="lang-btn" onclick="toggleLanguage()">
-                <span id="lang-btn-text">English</span>
+                <span id="lang-btn-text">العربية</span>
             </button>
         </div>
 
-        <div class="gift-icon">🎁</div>
+        <div class="gift-icon">🏪</div>
         
-        <h1 id="main-title">مفاجأة خاصة للموظفين!</h1>
+        <h1 id="main-title">Tameed Employee Discounts</h1>
         
         <p class="subtitle" id="subtitle">
-            تهانينا! تم اختيارك للحصول على مكافأة خاصة. أدخل بريدك الإلكتروني للمطالبة بجائزتك الآن!
+            Exclusive discounts for Tameed employees at various companies
         </p>
 
         <div class="highlight-box">
-            <p id="highlight-text">⏰ العرض ساري لفترة محدودة!</p>
+            <p id="highlight-text">New companies added monthly</p>
         </div>
 
         <form id="giftForm" onsubmit="handleSubmit(event)">
             <div class="form-group">
-                <label for="email" id="email-label">البريد الإلكتروني للشركة:</label>
+                <label for="email" id="email-label">To verify your eligibility, enter your email:</label>
                 <input 
                     type="email" 
                     id="email" 
@@ -501,12 +501,12 @@
             </div>
 
             <button type="submit" class="submit-btn" id="submit-btn">
-                🎉 احصل على جائزتك الآن
+                View Available Discounts
             </button>
 
             <div class="secure-badge">
                 <span>🔒</span>
-                <span id="secure-text">آمن ومحمي 100%</span>
+                <span id="secure-text">Secure & Protected</span>
             </div>
         </form>
     </div>
@@ -548,42 +548,42 @@
     </div>
 
     <script>
-        let currentLang = 'ar';
+        let currentLang = 'en';
 
         const translations = {
             ar: {
                 langBtn: 'English',
-                mainTitle: 'مفاجأة خاصة للموظفين!',
-                subtitle: 'تهانينا! تم اختيارك للحصول على مكافأة خاصة. أدخل بريدك الإلكتروني للمطالبة بجائزتك الآن!',
-                highlightText: '⏰ العرض ساري لفترة محدودة!',
-                emailLabel: 'البريد الإلكتروني للشركة:',
-                submitBtn: '🎉 احصل على جائزتك الآن',
-                secureText: 'آمن ومحمي 100%',
+                mainTitle: 'خصومات موظفين تعميد',
+                subtitle: 'خصومات حصرية لموظفين تعميد في العديد من الشركات',
+                highlightText: 'نضيف شركات جديدة كل شهر',
+                emailLabel: 'للتحقق من أهليتك، أدخل بريدك الإلكتروني:',
+                submitBtn: 'عرض الخصومات المتاحة',
+                secureText: 'آمن ومحمي',
                 warningTitle: 'تنبيه أمني!',
-                warningText: 'لقد وقعت للتو في فخ QR Code وهمي! تخيل لو كان هذا هجوماً حقيقياً...',
-                tipsTitle: '⚡ نصائح مهمة لحماية نفسك:',
+                warningText: 'وقعت في فخ رمز QR مزيف! تخيل لو كان هجوم حقيقي...',
+                tipsTitle: 'نصائح مهمة لحماية نفسك:',
                 tips: [
-                    'لا تقم بمسح أكواد QR من مصادر غير موثوقة',
+                    'لا تمسح رموز QR من مصادر غير موثوقة',
                     'تحقق من رابط الموقع قبل إدخال أي بيانات',
                     'لا تشارك معلومات حساسة عبر روابط عشوائية',
-                    'استخدم تطبيقات موثوقة لمسح الأكواد',
-                    'عند الشك، اسأل قسم تقنية المعلومات'
+                    'استخدم تطبيقات موثوقة لمسح الرموز',
+                    'إذا كان عندك شك، اسأل قسم تقنية المعلومات'
                 ],
                 rememberText: '<strong>تذكر:</strong> المهاجمون يستخدمون نفس الأساليب لسرقة بياناتك!',
-                closeBtn: 'فهمت، شكراً لك! 👍',
-                footerNote: 'هذا تمرين توعوي من فريق الأمن السيبراني 🛡️'
+                closeBtn: 'فهمت، شكراً',
+                footerNote: 'هذا تمرين توعية من فريق الأمن السيبراني'
             },
             en: {
                 langBtn: 'العربية',
-                mainTitle: 'Special Employee Surprise!',
-                subtitle: 'Congratulations! You have been selected for a special reward. Enter your email to claim your prize now!',
-                highlightText: '⏰ Limited Time Offer!',
-                emailLabel: 'Company Email:',
-                submitBtn: '🎉 Claim Your Prize Now',
-                secureText: '100% Secure & Protected',
+                mainTitle: 'Tameed Employee Discounts',
+                subtitle: 'Exclusive discounts for Tameed employees at various companies',
+                highlightText: 'New companies added monthly',
+                emailLabel: 'To verify your eligibility, enter your email:',
+                submitBtn: 'View Available Discounts',
+                secureText: 'Secure & Protected',
                 warningTitle: 'Security Alert!',
                 warningText: 'You just fell for a fake QR Code trap! Imagine if this was a real attack...',
-                tipsTitle: '⚡ Important Tips to Protect Yourself:',
+                tipsTitle: 'Important Tips to Protect Yourself:',
                 tips: [
                     'Never scan QR codes from untrusted sources',
                     'Verify the website URL before entering any data',
@@ -592,8 +592,8 @@
                     'When in doubt, ask the IT department'
                 ],
                 rememberText: '<strong>Remember:</strong> Attackers use the same tactics to steal your data!',
-                closeBtn: 'Got it, Thanks! 👍',
-                footerNote: 'This is an awareness exercise from the Cybersecurity Team 🛡️'
+                closeBtn: 'Got it, Thanks',
+                footerNote: 'This is an awareness exercise from the Cybersecurity Team'
             }
         };
 
