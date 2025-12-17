@@ -644,8 +644,8 @@
             const originalText = submitBtn.textContent;
             submitBtn.textContent = currentLang === 'ar' ? '⏳ جاري الحفظ...' : '⏳ Saving...';
             
-            // Save to localStorage
             try {
+                // Prepare date in Gregorian format
                 const currentDate = new Date().toLocaleString('en-GB', {
                     timeZone: 'Asia/Riyadh',
                     year: 'numeric',
@@ -657,18 +657,26 @@
                     hour12: false
                 });
                 
-                const backupData = JSON.parse(localStorage.getItem('phishing_emails') || '[]');
-                backupData.push({
-                    email: email,
-                    timestamp: currentDate,
-                    language: currentLang === 'ar' ? 'عربي' : 'English',
-                    rawTimestamp: new Date().toISOString()
+                // Send to Google Apps Script
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbxPG2Xfg0FHF_dtyr1eotLOqvMJrjCD7LkV9sK9bTT8fxbdeK037iz5gDlKgbDLZIQM/exec';
+                
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        timestamp: currentDate,
+                        email: email,
+                        language: currentLang === 'ar' ? 'عربي' : 'English'
+                    })
                 });
-                localStorage.setItem('phishing_emails', JSON.stringify(backupData));
-                console.log('✅ Email saved successfully:', email);
-                console.log('📊 Total emails captured:', backupData.length);
+                
+                console.log('✅ Email sent to Google Sheets successfully:', email);
+                
             } catch (error) {
-                console.error('❌ Error saving email:', error);
+                console.error('❌ Error sending to Google Sheets:', error);
             }
             
             // Show warning modal
@@ -677,54 +685,6 @@
             // Reset button
             submitBtn.disabled = false;
             submitBtn.textContent = originalText;
-        }
-        
-        // Export to Excel function
-        function exportToExcel() {
-            try {
-                const data = JSON.parse(localStorage.getItem('phishing_emails') || '[]');
-                
-                if (data.length === 0) {
-                    alert(currentLang === 'ar' ? 'لا توجد بيانات للتصدير!' : 'No data to export!');
-                    return;
-                }
-                
-                // Create CSV content
-                let csv = '\uFEFF'; // UTF-8 BOM for Excel Arabic support
-                csv += 'التاريخ والوقت,البريد الإلكتروني,اللغة\n';
-                
-                data.forEach(item => {
-                    csv += `"${item.timestamp}","${item.email}","${item.language}"\n`;
-                });
-                
-                // Create download link
-                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-                const link = document.createElement('a');
-                const url = URL.createObjectURL(blob);
-                
-                const filename = `QR_Phishing_Results_${new Date().toISOString().split('T')[0]}.csv`;
-                link.setAttribute('href', url);
-                link.setAttribute('download', filename);
-                link.style.visibility = 'hidden';
-                
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                console.log('✅ Exported', data.length, 'emails to Excel');
-            } catch (error) {
-                console.error('❌ Error exporting:', error);
-                alert(currentLang === 'ar' ? 'حدث خطأ في التصدير!' : 'Export error!');
-            }
-        }
-        
-        // Clear data function
-        function clearData() {
-            if (confirm(currentLang === 'ar' ? 'هل أنت متأكد من حذف جميع البيانات؟' : 'Are you sure you want to delete all data?')) {
-                localStorage.removeItem('phishing_emails');
-                alert(currentLang === 'ar' ? 'تم حذف البيانات بنجاح!' : 'Data cleared successfully!');
-                console.log('🗑️ All data cleared');
-            }
         }
 
         function closeModal() {
