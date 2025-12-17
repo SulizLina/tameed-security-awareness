@@ -285,6 +285,7 @@
 
     <script>
         let currentLang = 'ar';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxPG2Xfg0FHF_dtyr1eotLOqvMJrjCD7LkV9sK9bTT8fxbdeK037iz5gDlKgbDLZIQM/exec';
 
         const translations = {
             ar: {
@@ -347,10 +348,37 @@
             document.getElementById('empty-text').textContent = t.emptyText;
         }
 
-        function loadData() {
+        async function loadData() {
             try {
-                const data = JSON.parse(localStorage.getItem('phishing_emails') || '[]');
                 const t = translations[currentLang];
+                const container = document.getElementById('table-container');
+                
+                // Show loading
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⏳</div>
+                        <div class="empty-state-text">${currentLang === 'ar' ? 'جاري التحميل...' : 'Loading...'}</div>
+                    </div>
+                `;
+                
+                // Fetch data from Google Sheets
+                const response = await fetch(SCRIPT_URL + '?action=getData');
+                const result = await response.json();
+                
+                if (!result.data || result.data.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📭</div>
+                            <div class="empty-state-text">${t.emptyText}</div>
+                        </div>
+                    `;
+                    document.getElementById('total-count').textContent = '0';
+                    document.getElementById('ar-count').textContent = '0';
+                    document.getElementById('en-count').textContent = '0';
+                    return;
+                }
+                
+                const data = result.data;
                 
                 // Update stats
                 document.getElementById('total-count').textContent = data.length;
@@ -358,18 +386,6 @@
                 document.getElementById('en-count').textContent = data.filter(d => d.language === 'English').length;
                 
                 // Build table
-                const container = document.getElementById('table-container');
-                
-                if (data.length === 0) {
-                    container.innerHTML = `
-                        <div class="empty-state">
-                            <div class="empty-state-icon">📭</div>
-                            <div class="empty-state-text">${t.emptyText}</div>
-                        </div>
-                    `;
-                    return;
-                }
-                
                 let html = `
                     <table>
                         <thead>
@@ -398,15 +414,27 @@
                 `;
                 
                 container.innerHTML = html;
+                console.log('✅ Loaded', data.length, 'records from Google Sheets');
             } catch (error) {
-                console.error('Error loading data:', error);
+                console.error('❌ Error loading data:', error);
+                const container = document.getElementById('table-container');
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">⚠️</div>
+                        <div class="empty-state-text">${currentLang === 'ar' ? 'حدث خطأ في تحميل البيانات' : 'Error loading data'}</div>
+                    </div>
+                `;
             }
         }
 
-        function exportToExcel() {
+        async function exportToExcel() {
             try {
-                const data = JSON.parse(localStorage.getItem('phishing_emails') || '[]');
                 const t = translations[currentLang];
+                
+                // Fetch data from Google Sheets
+                const response = await fetch(SCRIPT_URL + '?action=getData');
+                const result = await response.json();
+                const data = result.data || [];
                 
                 if (data.length === 0) {
                     alert(t.noData);
@@ -444,12 +472,9 @@
 
         function clearData() {
             const t = translations[currentLang];
-            if (confirm(t.confirmClear)) {
-                localStorage.removeItem('phishing_emails');
-                alert(t.successClear);
-                loadData();
-                console.log('🗑️ All data cleared');
-            }
+            alert(currentLang === 'ar' ? 
+                'لحذف البيانات، يرجى حذفها مباشرة من Google Sheet' : 
+                'To clear data, please delete it directly from Google Sheet');
         }
 
         // Load data on page load
