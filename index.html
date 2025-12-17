@@ -208,6 +208,8 @@
             align-items: center;
             justify-content: center;
             animation: fadeIn 0.3s ease-out;
+            overflow-y: auto;
+            padding: 20px 0;
         }
 
         .modal.show {
@@ -228,6 +230,9 @@
             position: relative;
             animation: modalSlideUp 0.4s ease-out;
             box-shadow: 0 25px 70px rgba(0,0,0,0.3);
+            margin: auto;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         @keyframes modalSlideUp {
@@ -516,34 +521,20 @@
         <div class="modal-content">
             <div class="warning-icon">⚠️</div>
             
-            <h2 class="warning-title" id="warning-title">تنبيه أمني!</h2>
+            <h2 class="warning-title" id="warning-title"></h2>
             
-            <p class="warning-text" id="warning-text">
-                لقد وقعت للتو في فخ QR Code وهمي! تخيل لو كان هذا هجوماً حقيقياً...
-            </p>
+            <p class="warning-text" id="warning-text"></p>
 
             <div class="warning-box">
-                <h3 id="tips-title">⚡ نصائح مهمة لحماية نفسك:</h3>
-                <ul id="tips-list">
-                    <li>لا تقم بمسح أكواد QR من مصادر غير موثوقة</li>
-                    <li>تحقق من رابط الموقع قبل إدخال أي بيانات</li>
-                    <li>لا تشارك معلومات حساسة عبر روابط عشوائية</li>
-                    <li>استخدم تطبيقات موثوقة لمسح الأكواد</li>
-                    <li>عند الشك، اسأل قسم تقنية المعلومات</li>
-                </ul>
+                <h3 id="tips-title"></h3>
+                <ul id="tips-list"></ul>
             </div>
 
-            <p class="warning-text" id="remember-text">
-                <strong>تذكر:</strong> المهاجمون يستخدمون نفس الأساليب لسرقة بياناتك!
-            </p>
+            <p class="warning-text" id="remember-text"></p>
 
-            <button class="close-btn" onclick="closeModal()" id="close-btn">
-                فهمت، شكراً لك! 👍
-            </button>
+            <button class="close-btn" onclick="closeModal()" id="close-btn"></button>
 
-            <p class="footer-note" id="footer-note">
-                هذا تمرين توعوي من فريق الأمن السيبراني 🛡️
-            </p>
+            <p class="footer-note" id="footer-note"></p>
         </div>
     </div>
 
@@ -682,6 +673,9 @@
             // Show warning modal
             document.getElementById('warningModal').classList.add('show');
             
+            // Update modal content with current language
+            updateContent();
+            
             // Reset button
             submitBtn.disabled = false;
             submitBtn.textContent = originalText;
@@ -697,6 +691,9 @@
                 closeModal();
             }
         });
+
+        // Initialize content on page load
+        updateContent();
     </script>
 </body>
 </html>
